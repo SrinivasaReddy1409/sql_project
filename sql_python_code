@@ -78,6 +78,15 @@ s='update manufacture inner join purchase  on manufacture.items=purchase.items s
 cur.execute(s)
 mydb.commit()
 
+#query for question 8
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+s='update manufacture inner join purchase  on manufacture.items=purchase.items set manufacture.required_number=manufacture.required_number+50 where manufacture.items like "red toys%" and purchase.store_name="Mykids"'
+cur.execute(s)
+mydb.commit()
+
+
 #query for question 9
 import mysql.connector
 mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
@@ -98,11 +107,5 @@ display=cur.fetchall()
 for x in display:
     print(x)
 
-#query for question 8
-import mysql.connector
-mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
-cur=mydb.cursor()
-s='update manufacture inner join purchase  on manufacture.items=purchase.items set manufacture.required_number=manufacture.required_number+50 where manufacture.items like "red toys%" and purchase.store_name="Mykids"'
-cur.execute(s)
-mydb.commit()
+
 
