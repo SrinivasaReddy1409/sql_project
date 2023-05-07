@@ -74,7 +74,7 @@ mydb.commit()
 import mysql.connector
 mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
 cur=mydb.cursor()
-s='update manufacture inner join purchase  on manufacture.items=purchase.items set manufacture.required_number=manufacture.required_number+50 where manufacture.items like "red toys%" and purchase.store_name="Mykids"'
+s='delete manufacture,goods,purchase from((manufacture inner join goods on manufacture.items=goods.items) inner join  purchase on manufacture.items=purchase.items) where manufacture.defective="yes"'
 cur.execute(s)
 mydb.commit()
 
