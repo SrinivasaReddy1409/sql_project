@@ -1,0 +1,100 @@
+#connection
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409')
+print(mydb.connection_id)
+cur=mydb.cursor()
+cur.execute('create database inventory_management')
+
+#creating manufacture table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+p='create table manufacture(manufacture_id integer(10),products varchar(30),required_number integer(10),defective varchar(10))'
+cur.execute(p)
+
+#creating goods table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+p='create table goods(goods_id integer(10),manufacture_date date,items varchar(30),company varchar(30))'
+cur.execute(p)
+
+
+#creating purchase table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+p='create table purchase(purchase_id integer(10),items varchar(30),purchase_medium varchar(30),store_name varchar(30),purchase_amount integer(10))'
+cur.execute(p)
+
+#creating sale table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+p='create table sale(items varchar(30),store_name varchar(30),sale_date date,profit_margin integer(10))'
+cur.execute(p)
+
+#inserting data into manufacture table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+z='insert into manufacture(manufacture_id,items,required_number,defective) values(%s,%s,%s,%s)'
+a=[(101,"shirt",3,"yes"),(102,"round wooden chair",2,"no"),(103,"red toys-teddy bear",10,"no"),(104,"green toys-car",20,"no"),(105,"rocking wooden chair",5,"no"),(106,"wooden bed",4,"yes"),(107,"red toys-ball",35,"no"),(108,"hanging wooden chair",3,"no"),(109,"wooden table",2,"no")]
+cur.executemany(z,a)
+mydb.commit()
+
+#inserting data into goods table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+z='insert into goods(goods_id,manufacture_date,items,company) values(%s,%s,%s,%s)'
+a=[(1,'2023-4-1','shirt','Raymond Ltd.'),(2,'2023-4-27','round woooden chair','Indian timber products'),(3,'2023-4-23','red toys-teddy bear','Ram toys'),(4,'2023-5-3','green toys-car','Ram toys'),(5,'2023-4-28','rocking wooden chair','Indian timber products'),(6,'2023-4-16','wooden bed','SS Export'),(7,'2023-5-2','red toys-ball','Ram toys'),(8,'2023-5-3','hanging wooden chair','Indian timber products'),(9,'2023-5-1','wooden table','SS Export')]
+cur.executemany(z,a)
+mydb.commit()
+
+#inserting data into purchase table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+z='insert into purchase(purchase_id,items,purchase_medium,store_name,purchase_amount) values(%s,%s,%s,%s,%s)'
+a=[(201,'shirt','online','Oray',2000),(202,'round wooden chair','offline','Mycare',5000),(203,'red toys-teddy bear','online','Mykids',1500),(204,'green toys-car','online','MyKids',4000),(205,'rocking wooden chair','offline','Mycare',10000),(206,'wooden bed','offline','Mycare',16000),(207,'red toys-ball','online','Mykids',1750),(208,'hanging wooden chair','offline','Mycare',9000),(209,'wooden table','offline','Mycare',10000)]
+cur.executemany(z,a)
+mydb.commit()
+
+#inserting data into sale table
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+z='insert into sale(items,store_name,sale_date,profit_margin) values(%s,%s,%s,%s)'
+a=[('round wooden chair','Mycare','2023-05-02',1000),('red toys-teddy bear','Mykids','2023-04-28',500),('green toys-car','Mykids','2023-05-07',800),('rocking wooden chair','Mycare','2023-05-01',2500),('red toys-ball','Mykids','2023-05-04',350),('hanging wooden chair','Mycare','2023-05-06',1700),('wooden table','Mycare','2023-05-05',4000)]
+cur.executemany(z,a)
+mydb.commit()
+
+#query for question 9
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+s='select items from goods where manufacture_date<"2023-05-01" and items like"%wooden chair"'
+cur.execute(s)
+display=cur.fetchall()
+for x in display:
+    print(x)
+    
+#query for question 10
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+s='select profit_margin from((goods inner join purchase on goods.items=purchase.items)inner join sale on goods.items=sale.items) where goods.items="wooden table" and goods.company="SS Export" and sale.store_name="Mycare"'
+cur.execute(s)
+display=cur.fetchall()
+for x in display:
+    print(x)
+
+#query for question 8
+import mysql.connector
+mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
+cur=mydb.cursor()
+s='update manufacture inner join purchase  on manufacture.items=purchase.items set manufacture.required_number=manufacture.required_number+50 where manufacture.items like "red toys%" and purchase.store_name="Mykids"'
+cur.execute(s)
+mydb.commit()
+
