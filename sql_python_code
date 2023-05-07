@@ -48,7 +48,7 @@ import mysql.connector
 mydb=mysql.connector.connect(host='localhost',user='root',password='Srinu@1409',database='inventory_management')
 cur=mydb.cursor()
 z='insert into goods(goods_id,manufacture_date,items,company) values(%s,%s,%s,%s)'
-a=[(1,'2023-4-1','shirt','Raymond Ltd.'),(2,'2023-4-27','round woooden chair','Indian timber products'),(3,'2023-4-23','red toys-teddy bear','Ram toys'),(4,'2023-5-3','green toys-car','Ram toys'),(5,'2023-4-28','rocking wooden chair','Indian timber products'),(6,'2023-4-16','wooden bed','SS Export'),(7,'2023-5-2','red toys-ball','Ram toys'),(8,'2023-5-3','hanging wooden chair','Indian timber products'),(9,'2023-5-1','wooden table','SS Export')]
+a=[(1,'2023-4-1','shirt','Raymond Ltd.'),(2,'2023-4-27','round wooden chair','Indian timber products'),(3,'2023-4-23','red toys-teddy bear','Ram toys'),(4,'2023-5-3','green toys-car','Ram toys'),(5,'2023-4-28','rocking wooden chair','Indian timber products'),(6,'2023-4-16','wooden bed','SS Export'),(7,'2023-5-2','red toys-ball','Ram toys'),(8,'2023-5-3','hanging wooden chair','Indian timber products'),(9,'2023-5-1','wooden table','SS Export')]
 cur.executemany(z,a)
 mydb.commit()
 
